@@ -18,7 +18,6 @@ def scrape():
     browser.visit(news_url)
     news_title = []
     news_p_text = []
-    
     html = browser.html
     soup = BeautifulSoup(html, "html.parser")
 
@@ -29,11 +28,6 @@ def scrape():
         news_title.append(title.text)
         p_ = article.find('div', class_ = 'article_teaser_body')
         news_p_text.append(p_.text)
-    try:
-        browser.click_link_by_partial_text('More')
-          
-    except:
-        print("Scraping Complete")
     
     #scrape the feature images -------------------------------------------
     image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
@@ -50,11 +44,21 @@ def scrape():
         featured_image_url = base_url + href
         image_url.append(featured_image_url)
         
-
     #scrape the weather -------------------------------------------
     twitter_url = 'https://twitter.com/marswxreport?lang=en'
     browser.visit(twitter_url)
-
+    # html = browser.html
+    # soup = BeautifulSoup(html, 'html.parser')
+    tweets = soup.find_all('span', class_= "css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0")
+    weather_tweets = []
+    for tweet in tweets:
+        tweet_text = tweet.text
+        if 'sol' in tweet_text:
+            # print(f"Mars Weather Twitter Tweet:\n\n{tweet_text}")
+            weather_tweets.append(tweet_text)
+            break
+        else: 
+            pass
     #scrape the data table -------------------------------------------
     mars_facts_url = 'https://space-facts.com/mars/'
     tables = pd.read_html(mars_facts_url)
@@ -62,10 +66,9 @@ def scrape():
     df.columns = ['Category', 'Data']
     df.set_index('Category', inplace=True)
     html_table = df.to_html()
-    html_table.replace('\n', '')
-    # df.to_html('table.html')
+    new_table = html_table.replace('\n', '')
     
-
+    
     #scrape the hemisphere images -------------------------------------------
     hemisphere_image_urls = [ 
     {"title": "Valles Marineris Hemisphere", "img_url": "https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/valles_marineris_enhanced.tif/full.jpg"},
@@ -74,16 +77,16 @@ def scrape():
     {"title": "Syrtis Major Hemisphere", "img_url": "https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/syrtis_major_enhanced.tif/full.jpg"}
 ]
     # scrape dictionary
-    mars_dict = {"mars_news_title": news_title[0],
-                "mars_news_P": news_p_text[0],
-                "featured_image": image_url[0],
-                "Mars_facts": html_table,
+    mars_dict = {"mars_news_title": news_title,
+                "mars_news_P": news_p_text,
+                "mars_weather_tweet": weather_tweets,
+                "featured_image": image_url,
+                "Mars_facts": new_table,
                 "hemisphere_images": hemisphere_image_urls}
     
-    # print(mars_dict)
-    return mars_dict
-    
-    # Quite the browser after scraping
     browser.quit()
+    print(mars_dict)
+
+    return mars_dict
 
 scrape()
