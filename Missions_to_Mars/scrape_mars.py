@@ -2,6 +2,7 @@ from splinter import Browser
 from bs4 import BeautifulSoup
 import pandas as pd
 import requests
+import time
 
 def init_browser():
     # @NOTE: Replace the path with your actual path to the chromedriver
@@ -16,10 +17,11 @@ def scrape():
     #scrape the news -------------------------------------------
     news_url = 'https://mars.nasa.gov/news/'
     browser.visit(news_url)
-    news_title = []
-    news_p_text = []
+    time.sleep(1)
     html = browser.html
     soup = BeautifulSoup(html, "html.parser")
+    news_title = []
+    news_p_text = []
 
     articles = soup.find_all('div', class_='list_text')
     for article in articles:
@@ -32,8 +34,9 @@ def scrape():
     #scrape the feature images -------------------------------------------
     image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(image_url)
+    time.sleep(3)
     html = browser.html
-    soup = BeautifulSoup(html, 'html.parser')
+    soup = BeautifulSoup(html, "html.parser")
     image_url = []
     # Retrieve all elements that contain book information
     a_tags = soup.find_all('a', class_="button fancybox")
@@ -47,8 +50,9 @@ def scrape():
     #scrape the weather -------------------------------------------
     twitter_url = 'https://twitter.com/marswxreport?lang=en'
     browser.visit(twitter_url)
-    # html = browser.html
-    # soup = BeautifulSoup(html, 'html.parser')
+    time.sleep(3)
+    html = browser.html
+    soup = BeautifulSoup(html, "html.parser")
     tweets = soup.find_all('span', class_= "css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0")
     weather_tweets = []
     for tweet in tweets:
@@ -85,8 +89,8 @@ def scrape():
                 "hemisphere_images": hemisphere_image_urls}
     
     browser.quit()
-    print(mars_dict)
+    # print(mars_dict)
 
     return mars_dict
 
-scrape()
+# scrape()
