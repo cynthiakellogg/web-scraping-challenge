@@ -35,28 +35,40 @@
     </div>
     <!-- Featured Image -->
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-6">
         <h1>Featured Mars Image</h1>
+      </div>
+      <div class="col-md-6">
+        <h1>Mars Facts</h1>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4">
-        <img src="{{ mars_dict.featured_image[0] }}" alt="featured mars image">
+      <div class="col-md-6">
+        <img src="{{mars_dict.featured_image[0]}}" alt="featured mars image" style="width: 80%">
+      </div>
+      <div class="col-md-6">
+        <tabel>{{ mars_dict.Mars_facts | safe }}</table>
       </div>
     </div>
     <!-- Weather Tweets -->
     <div class="row">
-      <div class="col-md-4">
-        <h4>{{ mars_dict.mars_weather_tweet[0] }}</h4>
-    </div>
-    <!-- Mars Facts Table -->
-    <div class="row">
       <div class="col-md-12">
-        <h1>{{ mars_dict.Mars_facts | safe }}</h1>
+        <h1>Latest Mars Weather</h1>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>{{ mars_dict.mars_weather_tweet[0] }}</h4>
+      </div>
+    </div>
+   
 
     <!-- Mars Hemi Images, grid of 4 -->
+    <div class="row">
+      <div class="=col-md-12">
+        <h1>Photos of Mars 4 Hemispheres</h1>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-6">
         <h3> {{mars_dict.hemisphere_images[0].title}} </h3>
@@ -67,10 +79,10 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <img src="{{ mars_dict.hemisphere_images[0].img_url }}"  class="float-left" alt="Responsive image">
+        <img src="{{ mars_dict.hemisphere_images[0].img_url }}"  class="float-left" alt="Responsive image" style="width: 80%">
       </div>
       <div class="col-md-6">
-        <img src="{{ mars_dict.hemisphere_images[1].img_url }}"  class="float-right" alt="Responsive image">
+        <img src="{{ mars_dict.hemisphere_images[1].img_url }}"  class="float-right" alt="Responsive image" style="width: 80%">
       </div>
     </div>
     <div class="row">
@@ -83,10 +95,10 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <img src="{{ mars_dict.hemisphere_images[2].img_url }}"  class="float-left" alt="Responsive image">
+        <img src="{{ mars_dict.hemisphere_images[2].img_url }}"  class="float-left" alt="Responsive image" style="width: 80%">
       </div>
       <div class="col-md-6">
-        <img src="{{ mars_dict.hemisphere_images[3].img_url }}"  class="float-right" alt="Responsive image">
+        <img src="{{ mars_dict.hemisphere_images[3].img_url }}"  class="float-right" alt="Responsive image" style="width: 80%">
       </div>
     </div>
 
